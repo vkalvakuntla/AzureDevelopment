@@ -46,7 +46,7 @@
       "metadata": {
         "description": "The location of resources, such as templates and DSC modules, that the template depends on"
       },
-      "defaultValue": "https://github.com/vkalvakuntla/AzureDevelopment"
+      "defaultValue": "https://raw.githubusercontent.com/vkalvakuntla/AzureDevelopment/master"
     },
     "_artifactsLocationSasToken": {
       "type": "securestring",
