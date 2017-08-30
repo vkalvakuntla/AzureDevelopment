@@ -62,11 +62,67 @@
 			"description": "please enter VNET name"
 		  }
 	},
+	 "virtualNetworkAddressRange": {
+		  "type": "string",
+		  "defaultValue": "10.0.0.0/16",
+		  "metadata": {
+			"description": "please enter network address range"
+		  }
+	},
 	 "adSubnetName1": {
 		  "type": "string",
 		  "defaultValue": "WWT-SS_Pugent-Private-subnet1",
 		  "metadata": {
 			"description": "please enter subnet name"
+		  }
+	},
+	 "adSubnet1": {
+		  "type": "string",
+		  "defaultValue": "10.0.0.0/19",
+		  "metadata": {
+			"description": "please enter network address range"
+		  }
+	},
+	"adSubnetName2": {
+		  "type": "string",
+		  "defaultValue": "WWT-SS_Pugent-Private-subnet2",
+		  "metadata": {
+			"description": "please enter subnet name"
+		  }
+	},
+	 "adSubnet2": {
+		  "type": "string",
+		  "defaultValue": "10.0.32.0/19",
+		  "metadata": {
+			"description": "please enter network address range"
+		  }
+	},
+	"adSubnetName3": {
+		  "type": "string",
+		  "defaultValue": "WWT-SS_Pugent-Public-subnet1",
+		  "metadata": {
+			"description": "please enter subnet name"
+		  }
+	},
+	 "adSubnet3": {
+		  "type": "string",
+		  "defaultValue": "10.0.128.0/20",
+		  "metadata": {
+			"description": "please enter network address range"
+		  }
+	},
+	"adSubnetName4": {
+		  "type": "string",
+		  "defaultValue": "WWT-SS_Pugent-Public-subnet2",
+		  "metadata": {
+			"description": "please enter subnet name"
+		  }
+	},
+	 "adSubnet4": {
+		  "type": "string",
+		  "defaultValue": "10.0.144.0/20",
+		  "metadata": {
+			"description": "please enter network address range"
 		  }
 	},
 	 "resourcegroup": {
@@ -80,8 +136,8 @@
   "variables": {
     "vhdStorageAccountName": "[concat('vhds', uniqueString(resourceGroup().id))]",
     "storageAccountType": "Premium_LRS",
-    "adPDCVMName": "activeDirectoryPrimaryDomainControler",
-    "adBDCVMName": "activeDirectoryBackupDomainControler",
+    "adPDCVMName": "adBackupDC",
+    "adBDCVMName": "adPrimaryDC",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
     "imageSKU": "2016-Datacenter",
@@ -92,15 +148,6 @@
     "adLBBE": "LBBE",
     "adPDCRDPNAT": "adPDCRDP",
     "adBDCRDPNAT": "adBDCRDP",
-    "virtualNetworkAddressRange": "10.0.0.0/16",
-    "adSubnet1": "10.0.0.0/19",
-	"adSubnet2": "10.0.32.0/19",
-	"adSubnet3": "10.0.128.0/20",
-	"adSubnet4": "10.0.144.0/20",
-	"adSubnetName1":"WWT-SS_Pugent-Private-subnet1",
-	"adSubnetName2":"WWT-SS_Pugent-Private-subnet2",
-	"adSubnetName3":"WWT-SS_Pugent-Public-subnet1",
-	"adSubnetName4":"WWT-SS_Pugent-Public-subnet2",
     "adPDCNicName": "adPDCNic",
     "adPDCNicIPAddress": "10.0.0.4",
     "adBDCNicName": "adBDCNic",
@@ -167,34 +214,34 @@
         },
         "parameters": {
           "virtualNetworkName": {
-            "value": "[variables('virtualNetworkName')]"
+            "value": "[parameters('virtualNetworkName')]"
           },
           "virtualNetworkAddressRange": {
-            "value": "[variables('virtualNetworkAddressRange')]"
+            "value": "[parameters('virtualNetworkAddressRange')]"
           },
           "subnetName1": {
-            "value": "[variables('adSubnetName1')]"
+            "value": "[parameters('adSubnetName1')]"
           },
 		  "subnetName2": {
-            "value": "[variables('adSubnetName2')]"
+            "value": "[parameters('adSubnetName2')]"
           },
 		  "subnetName3": {
-            "value": "[variables('adSubnetName3')]"
+            "value": "[parameters('adSubnetName3')]"
           },
 		  "subnetName4": {
-            "value": "[variables('adSubnetName4')]"
+            "value": "[parameters('adSubnetName4')]"
           },
           "subnetRange1": {
-            "value": "[variables('adSubnet1')]"
+            "value": "[parameters('adSubnet1')]"
           },
           "subnetRange2": {
-            "value": "[variables('adSubnet2')]"
+            "value": "[parameters('adSubnet2')]"
           },
           "subnetRange3": {
-            "value": "[variables('adSubnet3')]"
+            "value": "[parameters('adSubnet3')]"
           },
           "subnetRange4": {
-            "value": "[variables('adSubnet4')]"
+            "value": "[parameters('adSubnet4')]"
           }
         }
       }
@@ -427,34 +474,34 @@
         },
         "parameters": {
           "virtualNetworkName": {
-            "value": "[variables('virtualNetworkName')]"
+            "value": "[parameters('virtualNetworkName')]"
           },
           "virtualNetworkAddressRange": {
-            "value": "[variables('virtualNetworkAddressRange')]"
+            "value": "[parameters('virtualNetworkAddressRange')]"
           },
            "subnetName1": {
-            "value": "[variables('adSubnetName1')]"
+            "value": "[parameters('adSubnetName1')]"
           },
 		  "subnetName2": {
-            "value": "[variables('adSubnetName2')]"
+            "value": "[parameters('adSubnetName2')]"
           },
 		  "subnetName3": {
-            "value": "[variables('adSubnetName3')]"
+            "value": "[parameters('adSubnetName3')]"
           },
 		  "subnetName4": {
-            "value": "[variables('adSubnetName4')]"
+            "value": "[parameters('adSubnetName4')]"
           },
           "subnetRange1": {
-            "value": "[variables('adSubnet1')]"
+            "value": "[parameters('adSubnet1')]"
           },
           "subnetRange2": {
-            "value": "[variables('adSubnet2')]"
+            "value": "[parameters('adSubnet2')]"
           },
           "subnetRange3": {
-            "value": "[variables('adSubnet3')]"
+            "value": "[parameters('adSubnet3')]"
           },
           "subnetRange4": {
-            "value": "[variables('adSubnet4')]"
+            "value": "[parameters('adSubnet4')]"
           },
           "DNSServerAddress": {
             "value": [
@@ -650,34 +697,34 @@
         },
         "parameters": {
           "virtualNetworkName": {
-            "value": "[variables('virtualNetworkName')]"
+            "value": "[parameters('virtualNetworkName')]"
           },
           "virtualNetworkAddressRange": {
-            "value": "[variables('virtualNetworkAddressRange')]"
+            "value": "[parameters('virtualNetworkAddressRange')]"
           },
            "subnetName1": {
-            "value": "[variables('adSubnetName1')]"
+            "value": "[parameters('adSubnetName1')]"
           },
 		  "subnetName2": {
-            "value": "[variables('adSubnetName2')]"
+            "value": "[parameters('adSubnetName2')]"
           },
 		  "subnetName3": {
-            "value": "[variables('adSubnetName3')]"
+            "value": "[parameters('adSubnetName3')]"
           },
 		  "subnetName4": {
-            "value": "[variables('adSubnetName4')]"
+            "value": "[parameters('adSubnetName4')]"
           },
           "subnetRange1": {
-            "value": "[variables('adSubnet1')]"
+            "value": "[parameters('adSubnet1')]"
           },
           "subnetRange2": {
-            "value": "[variables('adSubnet2')]"
+            "value": "[parameters('adSubnet2')]"
           },
           "subnetRange3": {
-            "value": "[variables('adSubnet3')]"
+            "value": "[parameters('adSubnet3')]"
           },
           "subnetRange4": {
-            "value": "[variables('adSubnet4')]"
+            "value": "[parameters('adSubnet4')]"
           },
           "DNSServerAddress": {
             "value": [
