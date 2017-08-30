@@ -47,20 +47,41 @@
         "description": "The location of resources, such as templates and DSC modules, that the template depends on"
       },
       "defaultValue": "https://raw.githubusercontent.com/vkalvakuntla/AzureDevelopment/master"
-    },
+    }, 
     "_artifactsLocationSasToken": {
       "type": "securestring",
       "metadata": {
         "description": "Auto-generated token to access _artifactsLocation"
       },
       "defaultValue": ""
-    }
+    },
+	 "virtualNetworkName": {
+		  "type": "string",
+		  "defaultValue": "adorvn",
+		  "metadata": {
+			"description": "please enter VNET name"
+		  }
+	},
+	 "adSubnetName1": {
+		  "type": "string",
+		  "defaultValue": "WWT-SS_Pugent-Private-subnet1",
+		  "metadata": {
+			"description": "please enter subnet name"
+		  }
+	},
+	 "resourcegroup": {
+		  "type": "string",
+		  "defaultValue": "ADOR",
+		  "metadata": {
+			"description": "please enter resourcegroup name name"
+		  }
+	}
   },
   "variables": {
     "vhdStorageAccountName": "[concat('vhds', uniqueString(resourceGroup().id))]",
     "storageAccountType": "Premium_LRS",
-    "adPDCVMName": "adPDC",
-    "adBDCVMName": "adBDC",
+    "adPDCVMName": "activeDirectoryPrimaryDomainControler",
+    "adBDCVMName": "activeDirectoryBackupDomainControler",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
     "imageSKU": "2016-Datacenter",
@@ -71,15 +92,20 @@
     "adLBBE": "LBBE",
     "adPDCRDPNAT": "adPDCRDP",
     "adBDCRDPNAT": "adBDCRDP",
-    "virtualNetworkName": "adVNET",
     "virtualNetworkAddressRange": "10.0.0.0/16",
-    "adSubnetName": "adSubnet",
-    "adSubnet": "10.0.0.0/24",
+    "adSubnet1": "10.0.0.0/19",
+	"adSubnet2": "10.0.32.0/19",
+	"adSubnet3": "10.0.128.0/20",
+	"adSubnet4": "10.0.144.0/20",
+	"adSubnetName1":"WWT-SS_Pugent-Private-subnet1",
+	"adSubnetName2":"WWT-SS_Pugent-Private-subnet2",
+	"adSubnetName3":"WWT-SS_Pugent-Public-subnet1",
+	"adSubnetName4":"WWT-SS_Pugent-Public-subnet2",
     "adPDCNicName": "adPDCNic",
     "adPDCNicIPAddress": "10.0.0.4",
     "adBDCNicName": "adBDCNic",
     "adBDCNicIPAddress": "10.0.0.5",
-    "adSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('adSubnetName'))]",
+    "adSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('adSubnetName1'))]",
     "adLBName": "adLoadBalancer",
     "adlbID": "[resourceId('Microsoft.Network/loadBalancers',variables('adLBName'))]",
     "adlbFEConfigID": "[concat(variables('adlbID'),'/frontendIPConfigurations/',variables('adLBFE'))]",
@@ -146,11 +172,29 @@
           "virtualNetworkAddressRange": {
             "value": "[variables('virtualNetworkAddressRange')]"
           },
-          "subnetName": {
-            "value": "[variables('adSubnetName')]"
+          "subnetName1": {
+            "value": "[variables('adSubnetName1')]"
           },
-          "subnetRange": {
-            "value": "[variables('adSubnet')]"
+		  "subnetName2": {
+            "value": "[variables('adSubnetName2')]"
+          },
+		  "subnetName3": {
+            "value": "[variables('adSubnetName3')]"
+          },
+		  "subnetName4": {
+            "value": "[variables('adSubnetName4')]"
+          },
+          "subnetRange1": {
+            "value": "[variables('adSubnet1')]"
+          },
+          "subnetRange2": {
+            "value": "[variables('adSubnet2')]"
+          },
+          "subnetRange3": {
+            "value": "[variables('adSubnet3')]"
+          },
+          "subnetRange4": {
+            "value": "[variables('adSubnet4')]"
           }
         }
       }
@@ -388,11 +432,29 @@
           "virtualNetworkAddressRange": {
             "value": "[variables('virtualNetworkAddressRange')]"
           },
-          "subnetName": {
-            "value": "[variables('adSubnetName')]"
+           "subnetName1": {
+            "value": "[variables('adSubnetName1')]"
           },
-          "subnetRange": {
-            "value": "[variables('adSubnet')]"
+		  "subnetName2": {
+            "value": "[variables('adSubnetName2')]"
+          },
+		  "subnetName3": {
+            "value": "[variables('adSubnetName3')]"
+          },
+		  "subnetName4": {
+            "value": "[variables('adSubnetName4')]"
+          },
+          "subnetRange1": {
+            "value": "[variables('adSubnet1')]"
+          },
+          "subnetRange2": {
+            "value": "[variables('adSubnet2')]"
+          },
+          "subnetRange3": {
+            "value": "[variables('adSubnet3')]"
+          },
+          "subnetRange4": {
+            "value": "[variables('adSubnet4')]"
           },
           "DNSServerAddress": {
             "value": [
@@ -593,11 +655,29 @@
           "virtualNetworkAddressRange": {
             "value": "[variables('virtualNetworkAddressRange')]"
           },
-          "subnetName": {
-            "value": "[variables('adSubnetName')]"
+           "subnetName1": {
+            "value": "[variables('adSubnetName1')]"
           },
-          "subnetRange": {
-            "value": "[variables('adSubnet')]"
+		  "subnetName2": {
+            "value": "[variables('adSubnetName2')]"
+          },
+		  "subnetName3": {
+            "value": "[variables('adSubnetName3')]"
+          },
+		  "subnetName4": {
+            "value": "[variables('adSubnetName4')]"
+          },
+          "subnetRange1": {
+            "value": "[variables('adSubnet1')]"
+          },
+          "subnetRange2": {
+            "value": "[variables('adSubnet2')]"
+          },
+          "subnetRange3": {
+            "value": "[variables('adSubnet3')]"
+          },
+          "subnetRange4": {
+            "value": "[variables('adSubnet4')]"
           },
           "DNSServerAddress": {
             "value": [
