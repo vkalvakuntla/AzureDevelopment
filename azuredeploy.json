@@ -55,6 +55,13 @@
       },
       "defaultValue": ""
     },
+	 "AccountName": {
+	      "type": "string",
+	      "metadata": {
+		"description": "Accountname for VirtualNetwork"
+	      },
+	      "defaultValue": "WWT"
+	    },
 	 "virtualNetworkName": {
 		  "type": "string",
 		  "defaultValue": "adorvn",
@@ -213,9 +220,12 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "virtualNetworkName": {
-            "value": "[parameters('virtualNetworkName')]"
+          "AccountName": {
+            "value": "[parameters('AccountName')]"
           },
+	 "virtualNetworkName": {
+            "value": "[parameters('virtualNetworkName')]"
+          },	
           "virtualNetworkAddressRange": {
             "value": "[parameters('virtualNetworkAddressRange')]"
           },
@@ -473,6 +483,9 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
+	  "AccountName": {
+            "value": "[parameters('AccountName')]"
+          },	
           "virtualNetworkName": {
             "value": "[parameters('virtualNetworkName')]"
           },
@@ -696,6 +709,9 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
+	 "AccountName": {
+            "value": "[parameters('AccountName')]"
+          },	
           "virtualNetworkName": {
             "value": "[parameters('virtualNetworkName')]"
           },
