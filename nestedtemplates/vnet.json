@@ -19,25 +19,29 @@
       "type": "string",
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
-      }
+      },
+      "defaultValue": "WWT-SS_Pugent-Private-subnet1"
     },
 	"subnetName2": {
       "type": "string",
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
-      }
+      },
+      "defaultValue": "WWT-SS_Pugent-Private-subnet2"
     },
 	"subnetName3": {
       "type": "string",
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
-      }
+      },
+      "defaultValue": "WWT-SS_Pugent-Public-subnet1"
     },
 	"subnetName4": {
       "type": "string",
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
-      }
+      },
+      "defaultValue": "WWT-SS_Pugent-Public-subnet2"
     },
     "subnetRange1": {
       "type": "string",
