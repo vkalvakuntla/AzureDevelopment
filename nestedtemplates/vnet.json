@@ -93,7 +93,7 @@
         },
         "subnets": [
            {
-            "name": "[concat(parameters('AccountName'), '-', parameters('subnetRange1'))]",
+            "name": "[concat(parameters('AccountName'), '-', parameters('subnetName1'))]",
             "properties": {
               "addressPrefix": "[parameters('subnetRange1')]"
             }
