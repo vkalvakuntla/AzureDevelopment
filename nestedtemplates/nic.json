@@ -2,6 +2,13 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+     "AccountName": {
+      "type": "string",
+       "metadata": {
+      "description": "Accountname for VirtualNetwork"
+       },
+       "defaultValue": "WWT"
+    },
     "nicName": {
       "type": "string",
       "metadata": {
@@ -23,7 +30,7 @@
   },
   "resources": [
     {
-      "name": "[parameters('nicName')]",
+      "name": "[concat(parameters('AccountName'),'-',parameters('nicName')]",
       "type": "Microsoft.Network/networkInterfaces",
       "location": "[resourceGroup().location]",
       "apiVersion": "2016-10-01",
