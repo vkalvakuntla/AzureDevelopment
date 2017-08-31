@@ -20,28 +20,28 @@
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
       },
-      "defaultValue": "SS_Pugent-Private-subnet1"
+      "defaultValue": "WWT-SS_Pugent-Private-subnet1"
     },
 	"subnetName2": {
       "type": "string",
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
       },
-      "defaultValue": "SS_Pugent-Private-subnet2"
+      "defaultValue": "WWT-SS_Pugent-Private-subnet2"
     },
 	"subnetName3": {
       "type": "string",
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
       },
-      "defaultValue": "SS_Pugent-Public-subnet1"
+      "defaultValue": "WWT-SS_Pugent-Public-subnet1"
     },
 	"subnetName4": {
       "type": "string",
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
       },
-      "defaultValue": "SS_Pugent-Public-subnet2"
+      "defaultValue": "WWT-SS_Pugent-Public-subnet2"
     },
     "subnetRange1": {
       "type": "string",
@@ -86,7 +86,7 @@
         },
         "subnets": [
            {
-            "name": "[parameters('subnetName1'))]",
+            "name": "[parameters('subnetName1')]",
             "properties": {
               "addressPrefix": "[parameters('subnetRange1')]"
             }
