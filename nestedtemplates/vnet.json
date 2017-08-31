@@ -93,25 +93,25 @@
         },
         "subnets": [
            {
-            "name": "[concat('parameters('AccountName')', '-', parameters('subnetRange1'))]",
+            "name": "[concat(parameters('AccountName'), '-', parameters('subnetRange1'))]",
             "properties": {
               "addressPrefix": "[parameters('subnetRange1')]"
             }
           },
 		     {
-            "name": "[concat('parameters('AccountName')', '-', parameters('subnetName2'))]",
+            "name": "[concat(parameters('AccountName'), '-', parameters('subnetName2'))]",
             "properties": {
               "addressPrefix": "[parameters('subnetRange2')]"
             }
           },
 		       {
-            "name": "[concat('parameters('AccountName')', '-', parameters('subnetName3'))]",
+            "name": "[concat(parameters('AccountName'), '-', parameters('subnetName3'))]",
             "properties": {
               "addressPrefix": "[parameters('subnetRange3')]"
             }
           },
 		      {
-            "name": "[concat('parameters('AccountName')', '-', parameters('subnetName4'))]",
+            "name": "[concat(parameters('AccountName'), '-', parameters('subnetName4'))]",
             "properties": {
               "addressPrefix": "[parameters('subnetRange4')]"
             }
