@@ -223,7 +223,7 @@
           "AccountName": {
             "value": "[parameters('AccountName')]"
           },
-	 "virtualNetworkName": {
+	     "virtualNetworkName": {
             "value": "[parameters('virtualNetworkName')]"
           },	
           "virtualNetworkAddressRange": {
@@ -483,7 +483,7 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-	  "AccountName": {
+	      "AccountName": {
             "value": "[parameters('AccountName')]"
           },	
           "virtualNetworkName": {
@@ -671,6 +671,9 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
+		  "AccountName": {
+            "value": "[parameters('AccountName')]"
+          },
           "adBDCVMName": {
             "value": "[variables('adBDCVMName')]"
           },
@@ -709,7 +712,7 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-	 "AccountName": {
+		  "AccountName": {
             "value": "[parameters('AccountName')]"
           },	
           "virtualNetworkName": {
