@@ -2,6 +2,13 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "AccountName": {
+	"type": "string",
+	 "metadata": {
+	"description": "Accountname for VirtualNetwork"
+	 },
+       "defaultValue": "WWT"
+    },	  
     "virtualNetworkName": {
       "type": "string",
       "metadata": {
@@ -20,28 +27,28 @@
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
       },
-      "defaultValue": "WWT-SS_Pugent-Private-subnet1"
+      "defaultValue": "SS_Pugent-Private-subnet1"
     },
 	"subnetName2": {
       "type": "string",
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
       },
-      "defaultValue": "WWT-SS_Pugent-Private-subnet2"
+      "defaultValue": "SS_Pugent-Private-subnet2"
     },
 	"subnetName3": {
       "type": "string",
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
       },
-      "defaultValue": "WWT-SS_Pugent-Public-subnet1"
+      "defaultValue": "SS_Pugent-Public-subnet1"
     },
 	"subnetName4": {
       "type": "string",
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
       },
-      "defaultValue": "WWT-SS_Pugent-Public-subnet2"
+      "defaultValue": "SS_Pugent-Public-subnet2"
     },
     "subnetRange1": {
       "type": "string",
@@ -86,25 +93,25 @@
         },
         "subnets": [
            {
-            "name": "[parameters('subnetName1')]",
+            "name": "[concat(parameters('AccountName'),'-',parameters('subnetName1'))]",
             "properties": {
               "addressPrefix": "[parameters('subnetRange1')]"
             }
           },
 		     {
-            "name": "[parameters('subnetName2')]",
+            "name": "[concat(parameters('AccountName'),'-',parameters('subnetName2')]",
             "properties": {
               "addressPrefix": "[parameters('subnetRange2')]"
             }
           },
 		       {
-            "name": "[parameters('subnetName3')]",
+            "name": "[concat(parameters('AccountName'),'-',parameters('subnetName3')]",
             "properties": {
               "addressPrefix": "[parameters('subnetRange3')]"
             }
           },
 		      {
-            "name": "[parameters('subnetName4')]",
+            "name": "[concat(parameters('AccountName'),'-',parameters('subnetName4')]",
             "properties": {
               "addressPrefix": "[parameters('subnetRange4')]"
             }
