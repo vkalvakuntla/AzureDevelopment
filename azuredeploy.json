@@ -539,7 +539,10 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "nicName": {
+	  "AccountName": {
+            "value": "[parameters('AccountName')]"
+          },	
+	  "nicName": {
             "value": "[variables('adBDCNicName')]"
           },
           "ipConfigurations": {
@@ -671,6 +674,9 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
+	  "AccountName": {
+            "value": "[parameters('AccountName')]"
+          },	
           "adBDCVMName": {
             "value": "[variables('adBDCVMName')]"
           },
