@@ -78,7 +78,7 @@
 	},
 	 "adSubnetName1": {
 		  "type": "string",
-		  "defaultValue": "WWT-SS_Pugent-Private-subnet1",
+		  "defaultValue": "SS_Pugent-Private-subnet1",
 		  "metadata": {
 			"description": "please enter subnet name"
 		  }
@@ -92,7 +92,7 @@
 	},
 	"adSubnetName2": {
 		  "type": "string",
-		  "defaultValue": "WWT-SS_Pugent-Private-subnet2",
+		  "defaultValue": "SS_Pugent-Private-subnet2",
 		  "metadata": {
 			"description": "please enter subnet name"
 		  }
@@ -106,7 +106,7 @@
 	},
 	"adSubnetName3": {
 		  "type": "string",
-		  "defaultValue": "WWT-SS_Pugent-Public-subnet1",
+		  "defaultValue": "SS_Pugent-Public-subnet1",
 		  "metadata": {
 			"description": "please enter subnet name"
 		  }
@@ -120,7 +120,7 @@
 	},
 	"adSubnetName4": {
 		  "type": "string",
-		  "defaultValue": "WWT-SS_Pugent-Public-subnet2",
+		  "defaultValue": "SS_Pugent-Public-subnet2",
 		  "metadata": {
 			"description": "please enter subnet name"
 		  }
@@ -159,7 +159,8 @@
     "adPDCNicIPAddress": "10.0.0.4",
     "adBDCNicName": "adBDCNic",
     "adBDCNicIPAddress": "10.0.0.5",
-    "adSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('adSubnetName1'))]",
+	"adSubnetNameadSubRef": "[concat(parameters('AccountName'),'-',parameters('adSubnetName1'))]",
+    "adSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('adSubnetNameadSubRef'))]",
     "adLBName": "adLoadBalancer",
     "adlbID": "[resourceId('Microsoft.Network/loadBalancers',variables('adLBName'))]",
     "adlbFEConfigID": "[concat(variables('adlbID'),'/frontendIPConfigurations/',variables('adLBFE'))]",
@@ -539,6 +540,9 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
+		  "AccountName": {
+            "value": "[parameters('AccountName')]"
+          },
           "nicName": {
             "value": "[variables('adBDCNicName')]"
           },
