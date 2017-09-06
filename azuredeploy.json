@@ -143,25 +143,25 @@
   "variables": {
     "vhdStorageAccountName": "[concat('vhds', uniqueString(resourceGroup().id))]",
     "storageAccountType": "Premium_LRS",
-    "adPDCVMName": "adBackupDC",
-    "adBDCVMName": "adPrimaryDC",
+    "adPDCVMName": "[concat(parameters('AccountName'),'-','adBackupDC')]",
+    "adBDCVMName": "[concat(parameters('AccountName'),'-','adPrimaryDC')]",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
     "imageSKU": "2016-Datacenter",
-    "adAvailabilitySetName": "adAvailabiltySet",
-    "publicIPAddressName": "ad-lb-pip",
+    "adAvailabilitySetName": "[concat(parameters('AccountName'),'-','adAvailabiltySet')]",
+    "publicIPAddressName": "[concat(parameters('AccountName'),'-','ad-lb-pip')]",
     "adVMSize": "Standard_DS2_v2",
     "adLBFE": "LBFE",
     "adLBBE": "LBBE",
     "adPDCRDPNAT": "adPDCRDP",
     "adBDCRDPNAT": "adBDCRDP",
-    "adPDCNicName": "adPDCNic",
+    "adPDCNicName": "[concat(parameters('AccountName'),'-','adPDCNic')]",
     "adPDCNicIPAddress": "10.0.0.4",
-    "adBDCNicName": "adBDCNic",
+    "adBDCNicName": "[concat(parameters('AccountName'),'-','adBDCNic')]",
     "adBDCNicIPAddress": "10.0.0.5",
 	"adSubnetNameadSubRef": "[concat(parameters('AccountName'),'-',parameters('adSubnetName1'))]",
     "adSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('adSubnetNameadSubRef'))]",
-    "adLBName": "adLoadBalancer",
+    "adLBName": "[concat(parameters('AccountName'), 'adLoadBalancer')]",
     "adlbID": "[resourceId('Microsoft.Network/loadBalancers',variables('adLBName'))]",
     "adlbFEConfigID": "[concat(variables('adlbID'),'/frontendIPConfigurations/',variables('adLBFE'))]",
     "adPDCRDPNATRuleID": "[concat(variables('adlbID'),'/inboundNatRules/',variables('adPDCRDPNAT'))]",
@@ -179,7 +179,27 @@
     "adBDCPreparationModulesURL": "[concat(parameters('_artifactsLocation'),'/DSC/PrepareADBDC.zip', parameters('_artifactsLocationSasToken'))]",
     "adBDCPreparationFunction": "PrepareADBDC.ps1\\PrepareADBDC",
     "adBDCConfigurationModulesURL": "[concat(parameters('_artifactsLocation'),'/DSC/ConfigureADBDC.zip', parameters('_artifactsLocationSasToken'))]",
-    "adBDCConfigurationFunction": "ConfigureADBDC.ps1\\ConfigureADBDC"
+    "adBDCConfigurationFunction": "ConfigureADBDC.ps1\\ConfigureADBDC",
+	"toolsSubnetNameSubRef": "[concat(parameters('AccountName'),'-',parameters('adSubnetName2'))]",
+    "toolsSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('toolsSubnetNameSubRef'))]",
+	"toolsPublisher": "MicrosoftWindowsDesktop",
+	"toolsOffer": "Windows-10",
+	"toolssku": "RS2-Pro",
+	"toolsOSTye": "Windows",
+	"toolsdiskSizeGB": 127,
+	"toolsVMSize": "Standard_DS1_v2",
+	
+	"SCOMMonitoringLoggingNicIPName": "[concat(parameters('AccountName'),'-', 'SCOMMIP')]",
+	"SCOMMonitoringLoggingNSG_Name": "[concat(parameters('AccountName'),'-', 'SCOMMNSG')]",
+	"SCOMMonitoringLogging_VM_Name": "[concat(parameters('AccountName'),'-', 'SCOMMVM')]",
+	"SCOMMonitoringLogging_NIC_Name": "[concat(parameters('AccountName'),'-', 'SCOMMNic')]",
+	"SCOMMonitoringLogging_OS_Disk": "[concat(parameters('AccountName'),'-', 'SCOMMDisk')]",
+	
+	"CMDBNicIPName": "[concat(parameters('AccountName'),'-', 'CMDBIP')]",
+	"CMDB_NIC_Name": "[concat(parameters('AccountName'),'-', 'CMDBNic')]",
+	"CMDB_VM_Name":  "[concat(parameters('AccountName'),'-', 'CMDBVM')]",
+	"CMDB_OS_Disk":  "[concat(parameters('AccountName'),'-', 'CMDBDisk')]"
+  
   },
   "resources": [
     {
@@ -211,7 +231,7 @@
       "location": "[resourceGroup().location]"
     },
     {
-      "name": "VNet",
+      "name": "[concat(parameters('AccountName'),parameters('virtualNetworkName'))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2016-09-01",
       "properties": {
@@ -256,6 +276,217 @@
           }
         }
       }
+    },
+	{
+     "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('SCOMMonitoringLoggingNicIPName')]",
+      "apiVersion": "2017-06-01",
+      "location": "[resourceGroup().location]",
+      "scale": null,
+      "properties": {
+        "ipAddress": "40.85.158.157",
+        "publicIPAddressVersion": "IPv4",
+        "publicIPAllocationMethod": "Dynamic",
+        "idleTimeoutInMinutes": 4
+      },
+      "dependsOn": []
+    },
+	{
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('SCOMMonitoringLogging_NIC_Name')]",
+      "apiVersion": "2017-06-01",
+      "location": "[resourceGroup().location]",
+      "scale": null,
+      "properties": {
+       "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+           "properties": {
+              "provisioningState": "Succeeded",
+              "privateIPAddress": "10.0.32.4",
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('SCOMMonitoringLoggingNicIPName'))]"
+              },
+              "subnet": {
+                "id": "[variables('toolsSubnetRef')]"
+              },
+              "primary": true,
+              "privateIPAddressVersion": "IPv4"
+            }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": [],
+          "appliedDnsServers": [],
+          "internalDomainNameSuffix": "prxc3bfo1eouppvpxao2wjvamf.dx.internal.cloudapp.net"
+        },
+        "macAddress": "00-0D-3A-32-CD-2D",
+        "enableAcceleratedNetworking": false,
+        "enableIPForwarding": false,
+        "primary": true,
+        "virtualMachine": {
+          "id": "[resourceId('Microsoft.Compute/virtualMachines', variables('SCOMMonitoringLogging_VM_Name'))]"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', variables('SCOMMonitoringLoggingNicIPName'))]"
+      ]
+    },
+	{
+     "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('SCOMMonitoringLogging_VM_Name')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "scale": null,
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_DS1_v2"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsDesktop",
+            "offer": "Windows-10",
+            "sku": "RS2-Pro",
+            "version": "latest"
+          },
+          "osDisk": {
+            "osType": "Windows",
+            "name": "[variables('SCOMMonitoringLogging_OS_Disk')]",
+            "createOption": "FromImage",
+            "caching": "ReadWrite",
+            "managedDisk": {
+              "storageAccountType": "Premium_LRS"
+            },
+            "diskSizeGB": 127
+          },
+          "dataDisks": []
+        },
+        "osProfile": {
+          "computerName": "[variables('SCOMMonitoringLogging_VM_Name')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]",
+          "windowsConfiguration": {
+            "provisionVMAgent": true,
+            "enableAutomaticUpdates": true
+          },
+          "secrets": []
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('SCOMMonitoringLogging_NIC_Name'))]"
+            }
+          ]
+        },
+        "licenseType": "Windows_Client"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('SCOMMonitoringLogging_NIC_Name'))]"
+      ]
+    },
+	{
+     "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('CMDBNicIPName')]",
+      "apiVersion": "2017-06-01",
+      "location": "[resourceGroup().location]",
+      "scale": null,
+      "properties": {
+        "ipAddress": "40.85.158.158",
+        "publicIPAddressVersion": "IPv4",
+        "publicIPAllocationMethod": "Dynamic",
+        "idleTimeoutInMinutes": 4
+      },
+      "dependsOn": []
+    },
+	{
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('CMDB_NIC_Name')]",
+      "apiVersion": "2017-06-01",
+      "location": "[resourceGroup().location]",
+      "scale": null,
+      "properties": {
+       "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+           "properties": {
+              "provisioningState": "Succeeded",
+              "privateIPAddress": "10.0.32.5",
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('CMDBNicIPName'))]"
+              },
+              "subnet": {
+                "id": "[variables('toolsSubnetRef')]"
+              },
+              "primary": true,
+              "privateIPAddressVersion": "IPv4"
+            }
+          }
+        ],
+        "macAddress": "00-0D-3A-32-CD-2D",
+        "enableAcceleratedNetworking": false,
+        "enableIPForwarding": false,
+        "primary": true,
+        "virtualMachine": {
+          "id": "[resourceId('Microsoft.Compute/virtualMachines', variables('CMDB_VM_Name'))]"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', variables('CMDBNicIPName'))]"
+      ]
+    },
+	{
+     "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('CMDB_VM_Name')]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "scale": null,
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[variables('toolsVMSize')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsDesktop",
+            "offer": "Windows-10",
+            "sku": "RS2-Pro",
+            "version": "latest"
+          },
+          "osDisk": {
+            "osType": "Windows",
+            "name": "[variables('CMDB_OS_Disk')]",
+            "createOption": "FromImage",
+            "caching": "ReadWrite",
+            "managedDisk": {
+              "storageAccountType": "Premium_LRS"
+            },
+            "diskSizeGB": 127
+          },
+          "dataDisks": []
+        },
+        "osProfile": {
+          "computerName": "[variables('CMDB_VM_Name')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]",
+          "windowsConfiguration": {
+            "provisionVMAgent": true,
+            "enableAutomaticUpdates": true
+          },
+          "secrets": []
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('CMDB_NIC_Name'))]"
+            }
+          ]
+        },
+        "licenseType": "Windows_Client"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('CMDB_NIC_Name'))]"
+      ]
     },
     {
       "name": "[variables('adLBName')]",
